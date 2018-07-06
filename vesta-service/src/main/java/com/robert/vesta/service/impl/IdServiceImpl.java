@@ -2,10 +2,7 @@ package com.robert.vesta.service.impl;
 
 import com.robert.vesta.service.bean.Id;
 import com.robert.vesta.service.impl.bean.IdType;
-import com.robert.vesta.service.impl.populater.AtomicIdPopulator;
-import com.robert.vesta.service.impl.populater.IdPopulator;
-import com.robert.vesta.service.impl.populater.LockIdPopulator;
-import com.robert.vesta.service.impl.populater.SyncIdPopulator;
+import com.robert.vesta.service.impl.populater.*;
 import com.robert.vesta.util.CommonUtils;
 
 public class IdServiceImpl extends AbstractIdServiceImpl {
@@ -13,6 +10,8 @@ public class IdServiceImpl extends AbstractIdServiceImpl {
     private static final String SYNC_LOCK_IMPL_KEY = "vesta.sync.lock.impl.key";
 
     private static final String ATOMIC_IMPL_KEY = "vesta.atomic.impl.key";
+
+    private static final String CACHED_IMPL_KEY = "vesta.cached.impl.key";
 
     protected IdPopulator idPopulator;
 
@@ -43,7 +42,10 @@ public class IdServiceImpl extends AbstractIdServiceImpl {
         } else if (CommonUtils.isPropKeyOn(ATOMIC_IMPL_KEY)) {
             log.info("The AtomicIdPopulator is used.");
             idPopulator = new AtomicIdPopulator();
-        } else {
+        } else if (CommonUtils.isPropKeyOn(CACHED_IMPL_KEY) && idType == IdType.MAX_PEAK) {
+            log.info("The CachedIdPopulator is used");
+            idPopulator = new PerfIdPopulator();
+        }else {
             log.info("The default LockIdPopulator is used.");
             idPopulator = new LockIdPopulator();
         }

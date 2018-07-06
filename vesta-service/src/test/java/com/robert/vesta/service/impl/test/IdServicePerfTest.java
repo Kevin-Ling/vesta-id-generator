@@ -1,12 +1,16 @@
 package com.robert.vesta.service.impl.test;
 
 import com.robert.vesta.service.intf.IdService;
+import com.sun.javafx.runtime.SystemProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class IdServicePerfTest {
 
     public static void main(String[] args) throws InterruptedException {
+        //System.getProperties().setProperty("vesta.cached.impl.key","true");
+        //System.getProperties().setProperty("vesta.atomic.impl.key","true");
+
         ApplicationContext ac = new ClassPathXmlApplicationContext(
                 "spring/vesta-service-test.xml");
 
@@ -59,10 +63,11 @@ public class IdServicePerfTest {
             }
         }
 
-        System.out.println("AVG(us): " + sum / 1000 / 1000000);
+        System.out.println("AVG(us): " + sum / 1000 / 1000000.0d);
         System.out.println("MAX(ms): " + max / 1000000);
 
         // Result is about 400,000 per second
+        System.exit(0);
     }
 
 }
