@@ -154,19 +154,19 @@ public class VestaRestNettyServerHandler extends ChannelHandlerAdapter {
                         if (machine == -1) {
                             madeId = idService.makeId(time, seq);
                         } else {
-                            madeId = idService.makeId(machine, time, seq);
+                            madeId = idService.makeId(time, seq, machine);
                         }
                     } else {
                         madeId = idService
-                                .makeId(genmethod, machine, time, seq);
+                                .makeId(genmethod, time, seq, machine);
                     }
                 } else {
-                    madeId = idService.makeId(type, genmethod, machine, time,
-                            seq);
+                    madeId = idService.makeId(type, genmethod, time,
+                            seq, machine);
                 }
             } else {
-                madeId = idService.makeId(version, type, genmethod, machine,
-                        time, seq);
+                madeId = idService.makeId(version, type, genmethod,
+                        time, seq, machine);
             }
 
 
